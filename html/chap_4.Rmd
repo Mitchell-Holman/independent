@@ -1,0 +1,231 @@
+---
+title: "R Graphics Cookbook Chapter 4"
+author: "Mitchell Holman"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r label = "setup", include = FALSE, message = FALSE}
+library(ggplot2)
+knitr::opts_chunk$set(echo = TRUE, comment = NA, fig.align = "center", warning = FALSE, message = FALSE)
+```
+
+
+### Chapter 4. Line Graphs
+
+```{r}
+library(ggplot2)
+library(gcookbook)
+library(plyr)
+library(gridExtra)
+```
+
+### Section 4.1. Making a Basic Line Plot
+
+```{r}
+ggplot(BOD, aes(x=Time, y=demand)) + geom_line()
+
+BOD1 <- BOD 
+BOD1$Time <- factor(BOD1$Time)
+ggplot(BOD1, aes(x=Time, y=demand, group=1)) + geom_line()
+
+
+ggplot(BOD, aes(x=Time, y=demand)) + geom_line() + ylim(0, max(BOD$demand))
+ggplot(BOD, aes(x=Time, y=demand)) + geom_line() + expand_limits(y=0)
+```
+
+### Section 4.2. Adding Point to a Line Graph
+
+```{r}
+ggplot(BOD, aes(x=Time, y=demand)) + geom_line() + geom_point()
+
+
+nok <- ggplot(worldpop, aes(x=Year, y=Population)) + geom_line() + geom_point()
+
+
+vro <- ggplot(worldpop, aes(x=Year, y=Population)) + geom_line() + geom_point() +
+    scale_y_log10()
+
+
+grid.arrange(nok, vro)
+```
+
+### Section 4.3. Making a Line Graph with Multiple Lines
+
+```{r}
+tg <- ddply(ToothGrowth, c("supp", "dose"), summarise, length=mean(len))
+
+
+sddd <-ggplot(tg, aes(x=dose, y=length, colour=supp)) + geom_line()
+
+
+sdd <- ggplot(tg, aes(x=dose, y=length, linetype=supp)) + geom_line()
+
+grid.arrange(sddd,sdd, ncol= 2)
+
+
+ggplot(tg, aes(x=factor(dose), y=length, colour=supp, group=supp)) + geom_line()
+```
+
+
+```{r}
+ggplot(tg, aes(x=dose, y=length)) + geom_line()
+```
+
+```{r}
+qwe <- ggplot(tg, aes(x=dose, y=length, shape=supp)) + geom_line() +
+    geom_point(size=4)         
+
+wee <- ggplot(tg, aes(x=dose, y=length, fill=supp)) + geom_line() +
+    geom_point(size=4, shape=21)
+grid.arrange(qwe,wee, ncol= 2)
+
+ggplot(tg, aes(x=dose, y=length, shape=supp)) +
+    geom_line(position=position_dodge(0.2)) +  
+    geom_point(position=position_dodge(0.2), size=4) 
+```
+
+
+### Section 4.4. Changing the Appearance of Lines
+
+```{r}
+ggplot(BOD, aes(x=Time, y=demand)) +
+    geom_line(linetype="dashed", size=1, colour="blue")
+
+tg <- ddply(ToothGrowth, c("supp", "dose"), summarise, length=mean(len))
+
+ggplot(tg, aes(x=dose, y=length, colour=supp)) +
+    geom_line() +
+    scale_colour_brewer(palette="Set1")
+```
+
+
+```{r, fig.height=3, fig.width=7}
+fog <- ggplot(tg, aes(x=dose, y=length, group=supp)) +
+    geom_line(colour="darkgreen", size=1.5)
+
+
+jik <- ggplot(tg, aes(x=dose, y=length, colour=supp)) +
+    geom_line(linetype="dashed") +
+    geom_point(shape=22, size=3, fill="white")
+
+grid.arrange(fog, jik, ncol= 2)
+```
+
+### Section 4.5. Changing the Appearance of Points
+
+```{r}
+ggplot(BOD, aes(x=Time, y=demand)) +
+    geom_line() +
+    geom_point(size=4, shape=22, colour="darkred", fill="pink")
+
+ggplot(BOD, aes(x=Time, y=demand)) +
+    geom_line() +
+    geom_point(size=4, shape=21, fill="white")
+
+```
+
+```{r}
+tg <- ddply(ToothGrowth, c("supp", "dose"), summarise, length=mean(len))
+
+
+pd <- position_dodge(0.2)
+
+ggplot(tg, aes(x=dose, y=length, fill=supp)) +
+    geom_line(position=pd) +
+    geom_point(shape=21, size=3, position=pd) +
+    scale_fill_manual(values=c("black","white"))
+```
+
+
+### Section 4.6. Making a Graph with Shaded Areas
+
+```{r}
+sunspotyear <- data.frame(
+    Year     = as.numeric(time(sunspot.year)),
+    Sunspots = as.numeric(sunspot.year)
+)
+
+ggplot(sunspotyear, aes(x=Year, y=Sunspots)) + geom_area()
+
+sunspotyear <- data.frame(
+    Year     = as.numeric(time(sunspot.year)),
+    Sunspots = as.numeric(sunspot.year)
+)
+
+ggplot(sunspotyear, aes(x=Year, y=Sunspots)) + geom_area()
+
+ggplot(sunspotyear, aes(x=Year, y=Sunspots)) +
+    geom_area(colour="black", fill="blue", alpha=.2)
+
+ggplot(sunspotyear, aes(x=Year, y=Sunspots)) +
+    geom_area(fill="blue", alpha=.2) +
+    geom_line()
+
+```
+
+### Section 4.7. Making a Stacked Area Graph
+
+```{r}
+ggplot(uspopage, aes(x=Year, y=Thousands, fill=AgeGroup)) + geom_area()
+
+ggplot(uspopage, aes(x=Year, y=Thousands, fill=AgeGroup)) +
+    geom_area(colour="black", size=.2, alpha=.4) +
+    scale_fill_brewer(palette="Blues", breaks=rev(levels(uspopage$AgeGroup)))
+
+ggplot(uspopage, aes(x=Year, y=Thousands, fill=AgeGroup, order=desc(AgeGroup))) +
+    geom_area(colour="black", size=.2, alpha=.4) +
+    scale_fill_brewer(palette="Blues")
+
+ggplot(uspopage, aes(x=Year, y=Thousands, fill=AgeGroup, order=desc(AgeGroup))) +
+    geom_area(colour=NA, alpha=.4) +
+    scale_fill_brewer(palette="Blues") +
+    geom_line(position="stack", size=.2)
+```
+
+### Section 4.8. Making a Proportional Stacked Area Graph
+
+```{r}
+uspopage_prop <- ddply(uspopage, "Year", transform,
+                       Percent = Thousands / sum(Thousands) * 100)
+
+ggplot(uspopage_prop, aes(x=Year, y=Percent, fill=AgeGroup)) +
+    geom_area(colour="black", size=.2, alpha=.4) +
+    scale_fill_brewer(palette="Blues", breaks=rev(levels(uspopage$AgeGroup)))
+
+uspopage_prop <- ddply(uspopage, "Year", transform,
+                       Percent = Thousands / sum(Thousands) * 100)
+
+```
+
+### Section 4.9. Adding a Confidence Region
+
+```{r}
+clim <- subset(climate, Source == "Berkeley",
+               select=c("Year", "Anomaly10y", "Unc10y"))
+
+ggplot(clim, aes(x=Year, y=Anomaly10y)) +
+    geom_ribbon(aes(ymin=Anomaly10y-Unc10y, ymax=Anomaly10y+Unc10y),
+                alpha=0.2) +
+    geom_line()
+
+ggplot(clim, aes(x=Year, y=Anomaly10y)) +
+    geom_line(aes(y=Anomaly10y-Unc10y), colour="grey50", linetype="dotted") +
+    geom_line(aes(y=Anomaly10y+Unc10y), colour="grey50", linetype="dotted") +
+    geom_line()
+
+
+```
+
+
+<hr>
+END!
+
+
+
+
+
+
+
+
+

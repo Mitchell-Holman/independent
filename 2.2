@@ -1,0 +1,69 @@
+---
+title: "R Graphics Cookbook Chapter 2"
+author: "Mitchell Holman"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+### Chapter 2. Quickly Exploring Data
+
+```{r}
+library(ggplot2)
+library(gcookbook)
+```
+
+### Section 2.1. Creating a Scatter Plot
+
+```{r}
+plot(mtcars$wt, mtcars$mpg)
+
+ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point()
+```
+
+### Section 2.2. Creating a Line Graph
+
+```{r}
+qplot(temperature, pressure, data=pressure, geom="line")
+# This is equivalent to:
+ggplot(pressure, aes(x=temperature, y=pressure)) + geom_line()
+
+
+# Lines and points together
+qplot(temperature, pressure, data=pressure, geom=c("line", "point"))
+# Equivalent to:
+ggplot(pressure, aes(x=temperature, y=pressure)) + geom_line() + geom_point()
+```
+
+### Section 2.3. Creating a Bar Graph
+
+```{r}
+
+
+plot(pressure$temperature, pressure$pressure, type="l")
+points(pressure$temperature, pressure$pressure)
+
+lines(pressure$temperature, pressure$pressure/2, col="red")
+points(pressure$temperature, pressure$pressure/2, col="red")
+```
+
+### Section 2.4. Using Colors in a Bar Graph
+
+```{r}
+ 
+```
+
+### Section 2.5. Creating a Box Plot
+
+```{r}
+
+```
+
+### Section 3.6. Plotting a Function Curve
+
+```{r}
+
+```
+
+
+<hr>
+END!

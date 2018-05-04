@@ -1,0 +1,316 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={The reduction in weekly working hours in Europe},
+            pdfauthor={Mitch Holman},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{The reduction in weekly working hours in Europe}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+\subtitle{Looking at the development between 1996 and 2006}
+  \author{Mitch Holman}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \date{}
+  \predate{}\postdate{}
+
+
+\begin{document}
+\maketitle
+
+\subsection{Summary}\label{summary}
+
+The \textbf{International Labour Organization (ILO)} has many
+\href{http://www.ilo.org/global/statistics-and-databases/lang--en/index.htm}{data
+sets} on working conditions. For example, one can look at how weekly
+working hours have been decreasing in many countries of the world, while
+monetary compensation has risen. In this report, \emph{the reduction in
+weekly working hours} in European countries is analysed, and a
+comparison between 1996 and 2006 is made. All analysed countries have
+seen a decrease in weekly working hours since 1996 -- some more than
+others.
+
+\subsection{Preparations}\label{preparations}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(forcats)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Analysis}\label{analysis}
+
+\subsubsection{Data}\label{data}
+
+The herein used data can be found in the
+\href{http://www.ilo.org/ilostat/faces/wcnav_defaultSelection;ILOSTATCOOKIE=ZOm2Lqrr-OIuzxNGn2_08bNe9AmHQ1kUA6FydqyZJeIudFLb2Yz5!1845546174?_afrLoop=32158017365146\&_afrWindowMode=0\&_afrWindowId=null\#!\%40\%40\%3F_afrWindowId\%3Dnull\%26_afrLoop\%3D32158017365146\%26_afrWindowMode\%3D0\%26_adf.ctrl-state\%3D4cwaylvi8_4}{statistics
+database of the ILO}. For the purpose of this course, it has been
+slightly preprocessed.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{load}\NormalTok{(}\KeywordTok{url}\NormalTok{(}\StringTok{"http://s3.amazonaws.com/assets.datacamp.com/production/course_5807/datasets/ilo_data.RData"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+The loaded data contains 380 rows.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Some summary statistics}
+\NormalTok{ilo_data }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(year) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{mean_hourly_compensation =} \KeywordTok{mean}\NormalTok{(hourly_compensation),}
+            \DataTypeTok{mean_working_hours =} \KeywordTok{mean}\NormalTok{(working_hours))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 27 x 3
+##    year  mean_hourly_compensation mean_working_hours
+##    <fct>                    <dbl>              <dbl>
+##  1 1980                      9.27               34.0
+##  2 1981                      8.69               33.6
+##  3 1982                      8.36               33.5
+##  4 1983                      7.81               33.9
+##  5 1984                      7.54               33.7
+##  6 1985                      7.79               33.7
+##  7 1986                      9.70               34.0
+##  8 1987                     12.1                33.6
+##  9 1988                     13.2                33.7
+## 10 1989                     13.1                33.5
+## # ... with 17 more rows
+\end{verbatim}
+
+As can be seen from the above table, the average weekly working hours of
+European countries have been descreasing since 1980.
+
+\subsubsection{Preprocessing}\label{preprocessing}
+
+The data is now filtered so it only contains the years 1996 and 2006 --
+a good time range for comparison.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ilo_data <-}\StringTok{ }\NormalTok{ilo_data }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{==}\StringTok{ "1996"} \OperatorTok{|}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ "2006"}\NormalTok{)}
+  
+\CommentTok{# Reorder country factor levels}
+\NormalTok{ilo_data <-}\StringTok{ }\NormalTok{ilo_data }\OperatorTok{%>%}
+\StringTok{  }\CommentTok{# Arrange data frame first, so last is always 2006}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(year) }\OperatorTok{%>%}
+\StringTok{  }\CommentTok{# Use the fct_reorder function inside mutate to reorder countries by working hours in 2006}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{country =} \KeywordTok{fct_reorder}\NormalTok{(country,}
+\NormalTok{                               working_hours,}
+\NormalTok{                               last))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Results}\label{results}
+
+In the following, a plot that shows the reduction of weekly working
+hours from 1996 to 2006 in each country is produced.
+
+First, a custom theme is defined.
+
+Then, the plot is produced.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Compute temporary data set for optimal label placement}
+\NormalTok{median_working_hours <-}\StringTok{ }\NormalTok{ilo_data }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(country) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{median_working_hours_per_country =} \KeywordTok{median}\NormalTok{(working_hours)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ungroup}\NormalTok{()}
+
+\CommentTok{# Have a look at the structure of this data set}
+\KeywordTok{str}\NormalTok{(median_working_hours)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Classes 'tbl_df', 'tbl' and 'data.frame':    17 obs. of  2 variables:
+##  $ country                         : Factor w/ 30 levels "Netherlands",..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ median_working_hours_per_country: num  27 27.8 28.4 31 30.9 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Plot}
+\KeywordTok{ggplot}\NormalTok{(ilo_data) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_path}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ working_hours, }\DataTypeTok{y =}\NormalTok{ country),}
+            \DataTypeTok{arrow =} \KeywordTok{arrow}\NormalTok{(}\DataTypeTok{length =} \KeywordTok{unit}\NormalTok{(}\FloatTok{1.5}\NormalTok{, }\StringTok{"mm"}\NormalTok{), }\DataTypeTok{type =} \StringTok{"closed"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\CommentTok{# Add labels for values (both 1996 and 2006)}
+\StringTok{  }\KeywordTok{geom_text}\NormalTok{(}
+        \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ working_hours,}
+            \DataTypeTok{y =}\NormalTok{ country,}
+            \DataTypeTok{label =} \KeywordTok{round}\NormalTok{(working_hours, }\DecValTok{1}\NormalTok{),}
+            \DataTypeTok{hjust =} \KeywordTok{ifelse}\NormalTok{(year }\OperatorTok{==}\StringTok{ "2006"}\NormalTok{, }\FloatTok{1.4}\NormalTok{, }\OperatorTok{-}\FloatTok{0.4}\NormalTok{)}
+\NormalTok{          ),}
+        \CommentTok{# Change the appearance of the text}
+        \DataTypeTok{size =} \DecValTok{3}\NormalTok{,}
+        \DataTypeTok{family =} \StringTok{"Bookman"}\NormalTok{,}
+        \DataTypeTok{color =} \StringTok{"gray25"}
+\NormalTok{   ) }\OperatorTok{+}
+\StringTok{  }\CommentTok{# Add labels for country}
+\StringTok{  }\KeywordTok{geom_text}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ median_working_hours,}
+            \KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ country,}
+                \DataTypeTok{x =}\NormalTok{ median_working_hours_per_country,}
+                \DataTypeTok{label =}\NormalTok{ country),}
+            \DataTypeTok{vjust =} \DecValTok{2}\NormalTok{,}
+            \DataTypeTok{family =} \StringTok{"Bookman"}\NormalTok{,}
+            \DataTypeTok{color =} \StringTok{"gray25"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\CommentTok{# Add titles}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}
+    \DataTypeTok{title =} \StringTok{"People work less in 2006 compared to 1996"}\NormalTok{,}
+    \DataTypeTok{subtitle =} \StringTok{"Working hours in European countries, development since 1996"}\NormalTok{,}
+    \DataTypeTok{caption =} \StringTok{"Data source: ILO, 2017"}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\CommentTok{# Apply your theme }
+\StringTok{  }\KeywordTok{theme_ilo}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\CommentTok{# Remove axes and grids}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}
+    \DataTypeTok{axis.ticks =} \KeywordTok{element_blank}\NormalTok{(),}
+    \DataTypeTok{axis.title =} \KeywordTok{element_blank}\NormalTok{(),}
+    \DataTypeTok{axis.text =} \KeywordTok{element_blank}\NormalTok{(),}
+    \DataTypeTok{panel.grid =} \KeywordTok{element_blank}\NormalTok{(),}
+    \CommentTok{# Also, let's reduce the font size of the subtitle}
+    \DataTypeTok{plot.subtitle =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{9}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\CommentTok{# Reset coordinate system}
+\StringTok{  }\KeywordTok{coord_cartesian}\NormalTok{(}\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{25}\NormalTok{, }\DecValTok{41}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{Add_auxillary_image_files/figure-latex/unnamed-chunk-6-1} \end{center}
+
+\paragraph{An interesting correlation}\label{an-interesting-correlation}
+
+The results of another analysis are shown here, even though they cannot
+be reproduced with the data at hand.
+
+\begin{figure}
+\centering
+\includegraphics{http://s3.amazonaws.com/assets.datacamp.com/production/course_5807/datasets/relationship.png}
+\caption{The relationship between weekly working hours and hourly
+compensation.}
+\end{figure}
+
+As you can see, there's also an interesting relationship. The more
+people work, the less compensation they seem to receive, which seems
+kind of unfair. This is quite possibly related to other proxy variables
+like overall economic stability and performance of a country.
+
+
+\end{document}

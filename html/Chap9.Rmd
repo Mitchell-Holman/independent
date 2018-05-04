@@ -1,0 +1,164 @@
+---
+title: "R Graphics Cookbook Chapter 9"
+author: "Mitch Holman"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+library(ggplot2)
+library(gcookbook)
+```
+
+## Controlling the Overall Appearance of Graphs
+
+Note: Some problems cannot be completed as written because the code has changed. You will need to find the updated code.
+
+### Section 9.1. Setting the Title of a Graph
+
+```{r}
+ p <- ggplot(heightweight, aes(x=ageYear, y=heightIn)) + geom_point()
+
+p + ggtitle("Age and Height of Schoolchildren")
+
+p + ggtitle("Age and Height\nof Schoolchildren")
+
+p + ggtitle("Age and Height of Schoolchildren") +
+    theme(plot.title=element_text(vjust = -2.5))
+
+p + annotate("text", x=mean(range(heightweight$ageYear)), y=Inf,
+             label="Age and Height of Schoolchildren", vjust=1.5, size=6)
+
+
+
+
+
+
+
+```
+
+### Section 9.2. Changing the Appearance of Text
+
+```{r}
+p <- ggplot(heightweight, aes(x=ageYear, y=heightIn)) + geom_point()
+
+
+p + theme(axis.title.x=element_text(size=16, lineheight=.9, family="Times", face="bold.italic", colour="red"))
+
+p + ggtitle("Age and Height\nof Schoolchildren") +
+    theme(plot.title=element_text(size=rel(1.5), lineheight=.9, family="Times", face="bold.italic", colour="red"))
+
+
+
+ p + annotate("text", x=15, y=53, label="Some text", size = 7, family="Times", fontface="bold.italic", colour="red")
+
+p + geom_text(aes(label=weightLb), size=4, family="Times", colour="red")
+
+
+```
+
+### Section 9.3. Using Themes
+
+```{r}
+p <- ggplot(heightweight, aes(x=ageYear, y=heightIn)) + geom_point()
+
+
+p + theme_grey()
+
+
+p + theme_bw()
+
+p + theme_grey(base_size=16, base_family="Times")
+
+
+theme_set(theme_bw())
+
+p
+
+theme_set(theme_grey())
+
+
+
+
+```
+
+### Section 9.4. Changing the Appearance of Theme Elements
+
+```{r}
+p <- ggplot(heightweight, aes(x=ageYear, y=heightIn, colour=sex)) + geom_point()
+
+
+p + theme(
+    panel.grid.major = element_line(colour="red"),
+    panel.grid.minor = element_line(colour="red", linetype="dashed", size=0.2),
+    panel.background = element_rect(fill="lightblue"),
+    panel.border = element_rect(colour="blue", fill=NA, size=2))
+
+
+p + ggtitle("Plot title here") +
+    theme(
+    axis.title.x = element_text(colour="red", size=14),
+    axis.text.x  = element_text(colour="blue"),
+    axis.title.y = element_text(colour="red", size=14, angle = 90),
+    axis.text.y  = element_text(colour="blue"),
+    plot.title = element_text(colour="red", size=20, face="bold"))
+
+
+p + theme(
+    legend.background = element_rect(fill="grey85", colour="red", size=1),
+    legend.title = element_text(colour="blue", face="bold", size=14),
+    legend.text = element_text(colour="red"),
+    legend.key = element_rect(colour="blue", size=0.25))
+
+
+p + facet_grid(sex ~ .) + theme(
+    strip.background = element_rect(fill="pink"),
+    strip.text.y = element_text(size=14, angle=-90, face="bold"))
+  
+p + theme(axis.title.x = element_text(colour="red")) + theme_bw()
+
+
+p + theme_bw() + theme(axis.title.x = element_text(colour="red", size=12))
+
+
+
+
+
+```
+
+### Section 9.5. Creating Your Own Themes
+
+```{r}
+mytheme <- theme_bw() +
+    theme(text       = element_text(colour="red"),
+          axis.title = element_text(size = rel(1.25)))
+
+p <- ggplot(heightweight, aes(x=ageYear, y=heightIn)) + geom_point()
+
+p + mytheme
+
+
+```
+
+### Section 9.6. Hiding Grid Lines
+
+```{r}
+p <- ggplot(heightweight, aes(x=ageYear, y=heightIn)) + geom_point()
+
+p + theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank())
+
+
+p + theme(panel.grid.major.x = element_blank(),
+          panel.grid.minor.x = element_blank())
+
+
+p + theme(panel.grid.major.y = element_blank(),
+          panel.grid.minor.y = element_blank())
+
+
+
+```
+
+<hr>
+END!

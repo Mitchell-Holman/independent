@@ -1,0 +1,110 @@
+---
+title: "R Graphics Cookbook Chapter 2"
+author: "Mitchell Holman"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+### Chapter 2. Quickly Exploring Data
+
+```{r}
+library(ggplot2)
+library(gcookbook)
+library(foreign)
+```
+
+### Section 2.1. Creating a Scatter Plot
+
+```{r}
+plot(mtcars$wt, mtcars$mpg)
+
+ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point()
+```
+
+### Section 2.2. Creating a Line Graph
+
+```{r}
+
+qplot(temperature, pressure, data=pressure, geom="line")
+
+ggplot(pressure, aes(x=temperature, y=pressure)) + geom_line()
+
+
+
+qplot(temperature, pressure, data=pressure, geom=c("line", "point"))
+
+ggplot(pressure, aes(x=temperature, y=pressure)) + geom_line() + geom_point()
+plot(pressure$temperature, pressure$pressure, type="l")
+points(pressure$temperature, pressure$pressure)
+
+lines(pressure$temperature, pressure$pressure/2, col="red")
+points(pressure$temperature, pressure$pressure/2, col="red")
+
+```
+
+### Section 2.3. Creating a Bar Graph
+
+```{r}
+barplot(BOD$demand, names.arg=BOD$Time)
+
+barplot(table(mtcars$cyl))
+
+
+
+
+
+qplot(mtcars$cyl)
+qplot(factor(mtcars$cyl))
+
+
+```
+
+### Section 2.4. Using Colors in a Bar Graph
+
+```{r}
+ hist(mtcars$mpg, breaks=10)
+
+qplot(mtcars$mpg)
+hist(mtcars$mpg)
+
+ggplot(mtcars, aes(x=mpg)) + geom_histogram(binwidth=4)
+```
+
+### Section 2.5. Creating a Box Plot
+
+```{r}
+
+boxplot(len ~ supp, data = ToothGrowth)
+boxplot(len ~ supp + dose, data = ToothGrowth)
+
+
+
+ggplot(ToothGrowth, aes(x=supp, y=len)) + geom_boxplot()
+
+
+ggplot(ToothGrowth, aes(x=interaction(supp, dose), y=len)) + geom_boxplot()
+
+```
+
+### Section 3.6. Plotting a Function Curve
+
+```{r}
+
+ggplot(pg_mean, aes(x=group, y=weight)) + geom_bar(stat="identity")
+
+
+ggplot(pg_mean, aes(x=group, y=weight)) + geom_bar(stat="identity", width=0.5)
+
+
+ggplot(pg_mean, aes(x=group, y=weight)) + geom_bar(stat="identity", width=1)
+
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(stat="identity", width=0.5, position="dodge")
+
+ ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(stat="identity", width=0.5, position=position_dodge(0.7))
+```
+
+
+<hr>
+END!

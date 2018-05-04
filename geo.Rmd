@@ -1,0 +1,68 @@
+---
+title: "Untitled"
+author: "MITCH"
+date: "5/1/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+nyc2010census<- read_excel("nyc2010census_tabulation_equiv.xlsx")
+
+
+
+
+
+
+
+
+
+```
+
+
+## Reading in a shapefile
+
+
+```{r}
+library(sp)
+library(rgdal)
+library(sp)
+
+```
+
+```{r}
+library(sp)
+library(rgdal)
+library(foreign)
+
+ogrListLayers("nynta.shp") #will show you available layers for the above dataset
+shape=readOGR("nynta.shp", layer="nynta") #will load the shapefile to your dataset.
+plot(shape) #to get an overview
+# Use dir() to find directory name
+read.dbf
+
+x <- read.dbf("nynta.dbf", as.is = FALSE)
+str(x)
+
+
+
+
+
+dir()
+
+
+# Call dir() with directory name
+
+dir("nynta_16c")
+
+# Read in shapefile with readOGR(): neighborhoods
+neighborhoods <- readOGR("nynta_16c", "nynta")
+
+# summary() of neighborhoods
+summary(neighborhoods)
+
+# Plot neighboorhoods
+plot(neighborhoods)
+```
+

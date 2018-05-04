@@ -1,0 +1,268 @@
+---
+title: "Chap 3"
+author: "MITCH Holman"
+date: "2/13/2018"
+output: html_document
+---
+```{r label = "setup", include = FALSE, message = FALSE}
+library(ggplot2)
+knitr::opts_chunk$set(echo = TRUE, comment = NA, fig.align = "center", warning = FALSE, message = FALSE)
+```
+
+
+### Chapter 3. Bar Graphs
+
+```{r}
+library(ggplot2)
+library(gcookbook)
+library(gridExtra)
+library(plyr) 
+```
+
+### Section 3.1. Making a Basic Bar Graph
+
+```{r}
+ggplot(pg_mean, aes (x = group, y = weight))+
+  geom_bar(stat = "identity")
+ggplot(pg_mean, aes(x=group, y=weight)) +
+    geom_bar(stat="identity", fill="lightblue", colour="black")
+
+
+```
+
+```{r, echo = FALSE}
+
+c <-ggplot(BOD, aes(x=factor(Time), y=demand)) + geom_bar(stat="identity")
+
+r <-ggplot(BOD, aes(x=Time, y=demand)) + geom_bar(stat="identity")
+
+
+grid.arrange(c, r, ncol=2)
+```
+
+
+
+
+
+
+### Section 3.2. Grouping Bars Together
+
+```{r}
+
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(position="dodge", stat="identity")
+
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(position="dodge", colour="black", stat="identity") +
+    scale_fill_brewer(palette="Pastel1")
+ce <- cabbage_exp[1:5, ]  
+
+
+ggplot(ce, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(position="dodge", colour="black", stat="identity") +
+    scale_fill_brewer(palette="Pastel1")
+
+```
+
+### Section 3.3. Making a Bar Graph of Counts
+
+```{r}
+ggplot(diamonds, aes(x=cut)) + geom_bar()
+
+ggplot(diamonds, aes(x=carat)) + geom_bar()
+```
+
+### Section 3.4. Using Colors in a Bar Graph
+
+```{r}
+upc <- subset(uspopchange, rank(Change)>40)
+upc
+
+ggplot(upc, aes(x=Abb, y=Change, fill=Region)) + geom_bar(stat="identity")
+
+ggplot(upc, aes(x=reorder(Abb, Change), y=Change, fill=Region)) +
+    geom_bar(stat="identity", colour="black") +
+    scale_fill_manual(values=c("#669933", "#FFCC66")) +
+    xlab("State")
+```
+
+### Section 3.5. Coloring Negative and Positive Bars Differently
+
+```{r}
+csub <- subset(climate, Source=="Berkeley" & Year >= 1900)
+csub$pos <- csub$Anomaly10y >= 0
+t <-ggplot(csub, aes(x=Year, y=Anomaly10y, fill=pos)) +
+  geom_bar(stat="identity", position="identity")
+
+
+e <- ggplot(csub, aes(x=Year, y=Anomaly10y, fill=pos)) +
+    geom_bar(stat="identity", position="identity", colour="black", size=0.25) +
+    scale_fill_manual(values=c("#CCEEFF", "#FFDDDD"), guide=FALSE)
+grid.arrange(t,e)
+```
+
+### Section 3.6. Adjusting Bar Width and Spacing
+
+```{r}
+tt <- ggplot(pg_mean, aes(x=group, y=weight)) + geom_bar(stat="identity")
+rr <- ggplot(pg_mean, aes(x=group, y=weight)) + geom_bar(stat="identity", width=0.5)
+qq <- ggplot(pg_mean, aes(x=group, y=weight)) + geom_bar(stat="identity", width=1)
+grid.arrange(tt,rr,qq , ncol =3)
+
+op <- ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(stat="identity", width=0.5, position="dodge")
+og <- ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(stat="identity", width=0.5, position=position_dodge(0.7))
+
+grid.arrange(op,og , ncol = 2)
+
+
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(stat="identity", width=0.5, position="dodge")
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(stat="identity", width=0.5, position=position_dodge(0.7))
+
+```
+
+### Section 3.7. Making a Stacked Bar Graph
+
+```{r}
+
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(stat="identity")
+
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(stat="identity") +
+    guides(fill=guide_legend(reverse=TRUE))
+```
+
+### Section 3.8. Making a Proportional Stacked Bar Graph
+
+```{r}
+
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar, order=desc(Cultivar))) +
+    geom_bar(stat="identity")
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(stat="identity", colour="black") +
+    guides(fill=guide_legend(reverse=TRUE)) +
+    scale_fill_brewer(palette="Pastel1")
+```
+
+### Section 3.9. Adding Labels to a Bar Graph
+
+```{r}
+ce <- ddply(cabbage_exp, "Date", transform,
+            percent_weight = Weight / sum(Weight) * 100)
+
+ggplot(ce, aes(x=Date, y=percent_weight, fill=Cultivar)) +
+    geom_bar(stat="identity")
+
+ggplot(ce, aes(x=Date, y=percent_weight, fill=Cultivar)) +
+    geom_bar(stat="identity", colour="black") +
+    guides(fill=guide_legend(reverse=TRUE)) +
+    scale_fill_brewer(palette="Pastel1")
+```
+```{r}
+the <- ggplot(cabbage_exp, aes(x=interaction(Date, Cultivar), y=Weight)) +
+    geom_bar(stat="identity") +
+    geom_text(aes(label=Weight), vjust=1.5, colour="white")
+
+
+you <- ggplot(cabbage_exp, aes(x=interaction(Date, Cultivar), y=Weight)) +
+    geom_bar(stat="identity") +
+    geom_text(aes(label=Weight), vjust=-0.2)
+
+grid.arrange(the, you, ncol= 2)
+```
+```{r}
+ggplot(cabbage_exp, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(stat="identity", position="dodge") +
+    geom_text(aes(label=Weight), vjust=1.5, colour="white",
+              position=position_dodge(.9), size=3)
+```
+
+```{r}
+
+
+
+
+
+ce <- ddply(ce, "Date", transform, label_y=cumsum(Weight)-0.5*Weight)
+ggplot(ce, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(stat="identity") +
+    geom_text(aes(y=label_y, label=Weight), vjust=1.5, colour="white")
+
+ggplot(ce, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(stat="identity") +
+    geom_text(aes(y=label_y, label=Weight), colour="white")
+ggplot(ce, aes(x=Date, y=Weight, fill=Cultivar)) +
+    geom_bar(stat="identity", colour="black") +
+    geom_text(aes(y=label_y, label=paste(format(Weight, nsmall=2), "kg")),
+              size=4) +
+    guides(fill=guide_legend(reverse=TRUE)) +
+    scale_fill_brewer(palette="Pastel1")
+```
+
+
+### Section 3.10. Making a Cleveland Dot Plot
+
+```{r, fig.height=5, fig.width=4}
+
+library(gcookbook)
+tophit <- tophitters2001[1:25, ] 
+
+ggplot(tophit, aes(x=avg, y=name)) + geom_point()
+
+ggplot(tophit, aes(x=avg, y=reorder(name, avg))) +
+    geom_point(size=3) +                        # Use a larger dot
+    theme_bw() +
+    theme(panel.grid.major.x = element_blank(),
+          panel.grid.minor.x = element_blank(),
+          panel.grid.major.y = element_line(colour="grey60", linetype="dashed"))
+
+```
+
+
+```{r}
+ggplot(tophit, aes(x=reorder(name, avg), y=avg)) +
+    geom_point(size=3) +                        # Use a larger dot
+    theme_bw() +
+    theme(axis.text.x = element_text(angle=60, hjust=1),
+          panel.grid.major.y = element_blank(),
+          panel.grid.minor.y = element_blank(),
+          panel.grid.major.x = element_line(colour="grey60", linetype="dashed"))
+```
+
+```{r, fig.height=5, fig.width=5}
+nameorder <- tophit$name[order(tophit$lg, tophit$avg)]
+tophit$name <- factor(tophit$name, levels=nameorder)
+
+ggplot(tophit, aes(x=avg, y=name)) +
+    geom_segment(aes(yend=name), xend=0, colour="grey50") +
+    geom_point(size=3, aes(colour=lg)) +
+    scale_colour_brewer(palette="Set1", limits=c("NL","AL")) +
+    theme_bw() +
+    theme(panel.grid.major.y = element_blank(),   
+          legend.position=c(1, 0.55),            
+          legend.justification=c(1, 0.5))
+
+
+ggplot(tophit, aes(x=avg, y=name)) +
+    geom_segment(aes(yend=name), xend=0, colour="grey50") +
+    geom_point(size=3, aes(colour=lg)) +
+    scale_colour_brewer(palette="Set1", limits=c("NL","AL"), guide=FALSE) +
+    theme_bw() +
+    theme(panel.grid.major.y = element_blank()) +
+    facet_grid(lg ~ ., scales="free_y", space="free_y")
+
+
+
+```
+
+
+
+
+
+<hr>
+END!
+

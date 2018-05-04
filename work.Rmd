@@ -1,0 +1,70 @@
+---
+title: "Untitled"
+author: "MITCH"
+date: "4/16/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(MASS)
+library(partykit)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+View(Boston)
+Bo <- Boston
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r }
+
+set.seed(38)
+index <- sample(nrow(Bo), size = (.5 *(nrow(Bo))))
+
+test <- Bo[index, ]
+trainb <- Bo[-index, ]
+
+
+
+
+
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+mod <- lm(medv ~ . , data = trainb)
+
+summary(mod)
+
+tree1 <- rpart(mod, data = trainb)
+pred_tree <- predict(tree1, newdata = test)
+RSME_T <- sqrt(mean((pred_tree - test$medv)^2))
+RSME_T
+
+
+
+```
+
+```{r}
+rpart
+
+```
+
+
+
+```{r}
+MSPEEE <- sqrt(mean(resid(mod)^2))
+MSPEEE
+```
+

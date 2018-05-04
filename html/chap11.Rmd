@@ -1,0 +1,105 @@
+---
+title: "R Graphics Cookbook Chapter 11"
+author: "Mitch Holman"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+library(ggplot2)
+library(gcookbook)
+```
+
+## Facets
+
+Note: Some problems cannot be completed as written because the code has changed. You will need to find the updated code.
+
+### Section 11.1. Splitting Data into Subsets with Facets
+
+```{r}
+ p <- ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()
+
+
+p + facet_grid(drv ~ .)
+
+
+p + facet_grid(. ~ cyl)
+
+
+p + facet_grid(drv ~ cyl)
+
+p + facet_wrap( ~ class)
+
+
+p + facet_wrap( ~ class, nrow=2)
+p + facet_wrap( ~ class, ncol=4)
+
+
+
+
+
+
+
+
+
+```
+
+### Section 11.2. Using Facets with Different Axes
+
+```{r}
+p <- ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()
+
+p + facet_grid(drv ~ cyl, scales="free_y")
+
+p + facet_grid(drv ~ cyl, scales="free")
+
+
+
+
+```
+
+### Section 11.3. Changing the Text of Facet Labels
+
+```{r}
+mpg2 <- mpg  
+levels(mpg2$drv)[levels(mpg2$drv)=="4"]  <- "4wd"
+levels(mpg2$drv)[levels(mpg2$drv)=="f"]  <- "Front"
+levels(mpg2$drv)[levels(mpg2$drv)=="r"]  <- "Rear"
+
+
+ggplot(mpg2, aes(x=displ, y=hwy)) + geom_point() + facet_grid(drv ~ .)
+
+ggplot(mpg2, aes(x=displ, y=hwy)) + geom_point() +
+    facet_grid(drv ~ ., labeller = label_both)
+
+
+ mpg3 <- mpg
+
+levels(mpg3$drv)[levels(mpg3$drv)=="4"]  <- "4^{wd}"
+levels(mpg3$drv)[levels(mpg3$drv)=="f"]  <- "- Front %.% e^{pi * i}"
+levels(mpg3$drv)[levels(mpg3$drv)=="r"]  <- "4^{wd} - Front"
+
+ggplot(mpg3, aes(x=displ, y=hwy)) + geom_point() +
+    facet_grid(drv ~ ., labeller = label_parsed)
+
+
+
+```
+
+### Section 11.4. Changing the Appearance of Facet Labels and Headers
+
+```{r}
+ 
+ggplot(cabbage_exp, aes(x=Cultivar, y=Weight)) + geom_bar(stat="identity") +
+    facet_grid(. ~ Date) +
+    theme(strip.text = element_text(face="bold", size=rel(1.5)),
+          strip.background = element_rect(fill="lightblue", colour="black",
+                                          size=1))
+
+
+
+
+```
+
+<hr>
+END!
